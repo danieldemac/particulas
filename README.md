@@ -20,3 +20,27 @@ Os principais recursos do repositório incluem:
 Este repositório visa fornecer uma base sólida para estudantes, desenvolvedores e entusiastas interessados em explorar o fenômeno emergente por meio de simulações interativas. Através da compreensão e manipulação das configurações das partículas, é possível observar e experimentar diferentes comportamentos emergentes, aprofundando o conhecimento nessa área fascinante da ciência.
 
 Seja para fins educacionais, de pesquisa ou simplesmente para diversão, este repositório oferece a oportunidade de explorar e compreender o fenômeno emergente de maneira prática e envolvente.
+
+## Feedback
+
+Se você tiver algum feedback, por favor mande um e-mail para dm.arantes.cabral@gmail.com
+
+
+## Referência
+
+ - [Particle Life Simulation - by Hunar Ahmad](https://github.com/hunar4321/particle-life)
+
+
+## 🚀 Sobre mim
+Aqui estão algumas informações sobre mim:
+
+- 🎓 Sou estudante de Ciência da Computação.
+- 💻 Tenho experiência em Java e Python.
+- 🌐 Tenho habilidades avançadas em HTML, CSS e JavaScript.
+- 🔧 Também tenho alguma familiaridade com C#.
+- 📚 Possuo boas habilidades na língua inglesa.
+- 🚀 Sou apaixonado por aprender e acompanhar os últimos avanços em tecnologia.
+
+Sinta-se à vontade para entrar em contato!
+
+
