@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Simulação de Partículas - Fenômeno Emergente</title>
+	<link rel="stylesheet" type="text/css" href="css/reset.css">
+	<link rel="stylesheet" type="text/css" href="css/styles.css">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Ysabeau+SC:wght@200&display=swap" rel="stylesheet">
+</head>
+<header class="header">
+
+  <nav>
+    <ul>
+      <li><a href="index.html">Início</a></li>
+      <li><a href="sobre.html">Sobre</a></li>
+      <li><a href="contato.html">Contato</a></li>
+      <li><a href="mapa.html">UniFG</a></li>
+    </ul>
+  </nav>
+  </header>
+<body>
+	<div class="title">
+		<img class="img2" src="images/ciencias.png" alt="Logo Ciencias">
+		<h1>Simulação de Particulas &#x1F7E2; &#x1F534; &#x1F7E1; &#x1F535;</h1>
+		<label class="titulo"><i>"Fenômenos Emergentes"</i></label>
+
+	</div>
+	<p>Fenômenos emergentes <b>(Emergent Penomena)</b> são aqueles que surgem como resultado da interação de componentes individuais de um sistema, mas que não podem ser facilmente previstos ou explicados com base nesses componentes. Em outras palavras, eles são propriedades coletivas que surgem da complexidade e independência dos elementos que compõem um sistema.</p>
+	
+  
+</form>
+</div>
+<div class="life_box">
+	<canvas class="simulation" id="life" width="800" height="600"></canvas>
+	<button class="btn_box" type="button" onclick="updateRules()">Atualizar regras</button>
+	
+	<script>
+
+ m = document.getElementById("life").getContext("2d");
+
+let trailLength = 3; // comprimento do rastro
+
+	draw = (x, y, c, s) => {
+	  m.fillStyle = c;
+	  m.fillRect(x, y, s, s);
+	};
+
+	drawParticle = (x, y, c, s) => {
+	  m.fillStyle = 'rgba(0, 255, 255, 0.2)'; // cor do rastro (cyan com 20% de opacidade)
+	  m.beginPath();
+	  m.arc(x + s/2, y + s/2, s/2 + trailLength, 0, 2*Math.PI); // aumente o raio do círculo para criar um rastro mais longo
+
+
+
+	  m.fill();
+
+	  m.fillStyle = c; // cor da partícula
+	  m.beginPath();
+	  m.arc(x + s/2, y + s/2, s/2 * 1.2, 0, 2*Math.PI);; // posição e tamanho da partícula
+	  m.fill();
+	};
+	drawGradient = (x, y, gradientColor) => {
+  let gradient = m.createRadialGradient(x, y, 0, x, y, s/2);
+  gradient.addColorStop(0, gradientColor);
+  gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
+  m.fillStyle = gradient;
+  m.fillRect(x, y, s, s);
+};
+
+
+
+
+		  atoms = [];
+	  atom = (x, y, c, gradientColor) => {
+	  return { x: x, y: y, vx: 0, vy: 0, color: c, gradientColor: gradientColor };
+	};
+	  random = () => {
+	    return Math.random() * 800;
+	  };
+	  create = (number, color) => {
+	    group = [];
+	    for (let i = 0; i < number; i++) {
+	      group.push(atom(random(), random(), color));
+	      atoms.push(group[i]);
+	    }
+	    return group;
+	  };
+	  rule = (atoms1, atoms2, g) => {
+
+  for (let i = 0; i < atoms1.length; i++) {
+    fx = 0;
+    fy = 0;
+    a = atoms1[i];
+    if (a.x <= 0) { a.x = 0; }
+    if (a.x >= 800) { a.x = 800; }
+    if (a.y <= 0) { a.y = 0; }
+    if (a.y >= 600) { a.y = 600; }
+    if (a.x <= 5 || a.x >= (800-5)) { a.vx *= -2; }
+    if (a.y <= 5 || a.y >= (600-5)) { a.vy *= -2; }
+    
+    for (let j = 0; j < atoms2.length; j++) {
+      b = atoms2[j];
+      dx = a.x - b.x;
+      dy = a.y - b.y;
+      d = Math.sqrt(dx * dx + dy * dy);
+      if (d > 0 && d < 80) {
+        F = (g * 1) / d;
+        fx += F * dx;
+        fy += F * dy;
+      }
+      // Verificar se as partículas estão muito próximas uma da outra
+      if (d < 6  && d > 0) {
+        a.x += dx/d * 1.1; // Empurrar a partícula a
+        a.y += dy/d * 1.1; // Empurrar a partícula a
+        b.x -= dx/d * 1.1; // Empurrar a partícula b
+        b.y -= dy/d * 1.1; // Empurrar a partícula b
+      }
+      
+    }
+    z = 0.5;
+    a.vx = (a.vx + fx) * z;
+    a.vy = (a.vy + fy) * z;
+    a.x += a.vx;
+    a.y += a.vy;
+  }
+};
+// Adicionar interação com o mouse
+let isMouseDown = false;
+const canvas = document.getElementById("life");
+
+canvas.addEventListener("mousedown", () => {
+  isMouseDown = true;
+});
+
+canvas.addEventListener("mouseup", () => {
+  isMouseDown = false;
+});
+
+canvas.addEventListener("mousemove", (event) => {
+  if (!isMouseDown) {
+    return;
+  }
+  const rect = canvas.getBoundingClientRect();
+  const mouseX = event.clientX - rect.left;
+  const mouseY = event.clientY - rect.top;
+  for (let i = 0; i < atoms.length; i++) {
+    const a = atoms[i];
+    const dx = mouseX - a.x;
+    const dy = mouseY - a.y;
+    const d = Math.sqrt(dx * dx + dy * dy);
+    if (d < 100) {
+      const F = (100 - d) / 100 * 5;
+      a.vx -= dx * F;
+      a.vy -= dy * F;
+    }
+  }
+});
+	  yellow = create(200, "yellow");
+	  red = create(150, "red");
+	  green = create(150, "green");
+	  blue = create(150, "blue");
+	  white = create(75, "rgba(0, 255, 255, .1)");
+	  black = create(15, "rgba(0, 0, 0, .3)");
+
+	  /*Interação Base*/
+
+			greenGreen = -0.32;
+	  	greenRed = -0.17;
+	  	greenYellow = 0.34;
+	  	greenBlue = 0;
+	  	
+	  	redRed = -0.1;
+	  	redGreen = -0.34;
+	  	redBlue = 0;
+	  	redYellow = 0;
+
+	  	yellowYellow = 0.15;
+	  	yellowGreen = -0.2;
+	  	yellowRed = 0;
+	  	yellowBlue = 0;
+
+	  	blueBlue = -1;
+	  	blueGreen = -1;
+	  	blueRed = -1;
+	  	blueYellow = 0.75;
+
+	  	whiteWhite = 0.01;
+	  	whiteGreen = 0.05;
+	  	whiteRed = 0.01;
+	  	whiteYellow = 0.05;
+	  	whiteBlue = 0.01;
+	  	whiteBlack = 0.01;
+
+	    blackBlack = -0.01;
+	    blackGreen = 0.01;
+	    blackRed = 0.01;
+	    blackYellow = 0.01;
+	    blackBlue = 0.01;
+	    blackWhite = -0.01;
+
+
+
+
+	 function updateRules() {
+
+
+	  greenGreen = document.getElementById("greenGreen").valueAsNumber;
+	  greenRed = document.getElementById("greenRed").valueAsNumber;
+	  greenYellow = document.getElementById("greenYellow").valueAsNumber;
+	  greenBlue = document.getElementById("greenBlue").valueAsNumber;
+	  
+
+	  redRed = document.getElementById("redRed").valueAsNumber;
+	  redGreen = document.getElementById("redGreen").valueAsNumber;
+	  redYellow = document.getElementById("redYellow").valueAsNumber;
+	  redBlue = document.getElementById("redBlue").valueAsNumber;
+	  
+	  
+	  yellowYellow = document.getElementById("yellowYellow").valueAsNumber;
+	  yellowGreen = document.getElementById("yellowGreen").valueAsNumber;
+	  yellowRed = document.getElementById("yellowRed").valueAsNumber;
+	  yellowBlue = document.getElementById("yellowBlue").valueAsNumber;
+
+
+	  blueBlue = document.getElementById("blueBlue").valueAsNumber;
+	  blueGreen = document.getElementById("blueGreen").valueAsNumber;
+	  blueRed = document.getElementById("blueRed").valueAsNumber;
+	  blueYellow = document.getElementById("blueYellow").valueAsNumber;
+
+	}
+
+	  update = () => {
+
+	    rule(black, black, blackBlack);
+	    rule(black, green, blackGreen);
+	    rule(black, red, blackRed);
+	    rule(black, yellow,blackYellow);
+	    rule(black, blue, blackBlue);
+	    rule(black, white, blackWhite);
+
+
+	    rule(green, green, greenGreen);
+	    rule(green, red, greenRed);
+	    rule(green, yellow, greenYellow);
+	    rule(green, blue, greenBlue);
+	    
+	    rule(red, red, redRed);
+	    rule(red, green, redGreen);
+	    rule(red, yellow, redYellow);
+	    rule(red, blue, redBlue);
+	    
+	    rule(yellow, yellow, yellowYellow);
+	    rule(yellow, green, yellowGreen);
+	    rule(yellow, red, yellowRed);
+	    rule(yellow, blue, yellowBlue);
+	    
+	    rule(blue, blue, blueBlue);
+	    rule(blue, green, blueGreen);
+	    rule(blue, red, blueRed);
+	    rule(blue, yellow, blueYellow);
+
+	    rule(white, white, whiteWhite);
+	    rule(white, green, whiteGreen);
+	    rule(white, red, whiteRed);
+	    rule(white, yellow,whiteYellow);
+	    rule(white, blue, whiteBlue);
+	    rule(white, black, whiteBlack);
+
+
+	    
+	   m.clearRect(0, 0, 800, 600);
+var gradient = m.createLinearGradient(0, 0, 0, 600);
+gradient.addColorStop(1, "rgba(0, 0, 0, 0.5)"); // preto
+gradient.addColorStop(0, "rgba(100, 5, 180, 0.5)"); // roxo
+
+draw(0, 0, gradient, 800, 600);
+for (i = 0; i < atoms.length; i++) {
+  drawParticle(atoms[i].x, atoms[i].y, atoms[i].color, 5);
+}
+	    requestAnimationFrame(update);
+	    
+	  };
+	  update();
+
+	</script>
+	<div class="box-controles">
+		<div class="controles">
+		<div class="verde">
+			<form>
+				<label>
+  				&#x1F7E2; &#10145; &#x1F7E2;:
+  				<input type="range" min="-1" max="1" step="0.01" id="greenGreen" value="-0.32" oninput="document.getElementById('greenGreenValue').textContent = this.value">
+  				<span class="valores" id="greenGreenValue">-0.32</span>
+				</label>
+
+  				<br>
+
+  				<label>
+    			&#x1F7E2; &#10145; &#x1F534;:
+  				<input type="range" min="-1" max="1" step="0.01" id="greenRed" value="-0.17" oninput="document.getElementById('greenRedValue').textContent = this.value">
+  				<span class="valores" id="greenRedValue">-0.17</span>
+				</label>
+  				
+  				<br>
+  				
+  				<label>
+    			&#x1F7E2; &#10145; &#x1F7E1;:
+    			<input type="range" min="-1" max="1" step="0.01" id="greenYellow" value="0.34" oninput="document.getElementById('greenYellowValue').textContent = this.value">
+  				<span class="valores" id="greenYellowValue">0.34</span>
+				</label>
+				<br>
+  				
+  				<label>
+    			&#x1F7E2; &#10145; 	&#x1F535;:
+    			<input type="range" min="-1" max="1" step="0.01" id="greenBlue" value="-1" oninput="document.getElementById('greenBlueValue').textContent = this.value">
+  				<span class="valores" id="greenBlueValue">-1</span>
+				</label>
+  				
+  			</form>
+  		</div>	
+  <br>
+  		<div class="vermelho">
+  			<form>
+  				<label>
+    			&#x1F534; &#10145; &#x1F534;:
+    			<input type="range" min="-1" max="1" step="0.01" id="redRed" value="-0.1" oninput="document.getElementById('redRedValue').textContent = this.value">
+  				<span class="valores" id="redRedValue">-0.1</span>
+  				</label>
+  				<br>
+  				<label>
+    			&#x1F534; &#10145; &#x1F7E2;:
+    			<input type="range" min="-1" max="1" step="0.01" id="redGreen" value="-0.34" oninput="document.getElementById('redGreenValue').textContent = this.value">
+  				<span class="valores" id="redGreenValue">-0.34</span>
+  				</label>
+  				<br>
+  				<label>
+    			&#x1F534; &#10145; &#x1F7E1;:
+    			<input type="range" min="-1" max="1" step="0.01" id="redYellow" value="0" oninput="document.getElementById('redYellowValue').textContent = this.value">
+  				<span class="valores" id="redYellowValue">0</span>
+  			    </label>
+  			    <br>
+  				
+  				<label>
+    			&#x1F534; &#10145; 	&#x1F535;:
+    			<input type="range" min="-1" max="1" step="0.01" id="redBlue" value="-1" oninput="document.getElementById('redBlueValue').textContent = this.value">
+  				<span class="valores" id="redBlueValue">-1</span>
+				</label>
+  			</form>
+  		</div>
+  	<br>
+  		<div class="amarelo">
+  			<form>
+  				<label>
+    			&#x1F7E1; &#10145; &#x1F7E1;:
+    			<input type="range" min="-1" max="1" step="0.01" id="yellowYellow" value="0.15" oninput="document.getElementById('yellowYellowValue').textContent = this.value">
+  				<span class="valores" id="yellowYellowValue">0</span>
+  				</label>
+  				<br>
+  				<label>
+    			&#x1F7E1; &#10145; &#x1F7E2;:
+    			<input type="range" min="-1" max="1" step="0.01" id="yellowGreen" value="-0.2" oninput="document.getElementById('yellowGreenValue').textContent = this.value">
+  				<span class="valores" id="yellowGreenValue">-0.2</span>
+  				</label>
+  				<br>
+  				<label>
+    			&#x1F7E1; &#10145; &#x1F534;:
+    			<input type="range" min="-1" max="1" step="0.01" id="yellowRed" value="0" oninput="document.getElementById('yellowRedValue').textContent = this.value">
+  				<span class="valores" id="yellowRedValue">0</span>
+
+  				</label>
+  				&#x1F7E1; &#10145; 	&#x1F535;:
+    			<input type="range" min="-1" max="1" step="0.01" id="yellowBlue" value="-1" oninput="document.getElementById('yellowBlueValue').textContent = this.value">
+  				<span class="valores" id="yellowBlueValue">-1</span>
+  			</form>
+  		</div>
+  		<br>
+  		<div class="azul">
+  			<form>
+  				<label>
+    			&#x1F535; &#10145; 	&#x1F535;:
+    			<input type="range" min="-1" max="1" step="0.01" id="blueBlue" value="-1" oninput="document.getElementById('blueBlueValue').textContent = this.value">
+  				<span class="valores" id="blueBlueValue">-1</span>
+  				</label>
+  				<br>
+  				<label>
+    			&#x1F535; &#10145; &#x1F7E2;:
+    			<input type="range" min="-1" max="1" step="0.01" id="blueGreen" value="-1" oninput="document.getElementById('blueGreenValue').textContent = this.value">
+  				<span class="valores" id="blueGreenValue">-1</span>
+  				</label>
+  				<br>
+  				<label>
+    			&#x1F535; &#10145; &#x1F534;:
+    			<input type="range" min="-1" max="1" step="0.01" id="blueRed" value="-1" oninput="document.getElementById('blueRedValue').textContent = this.value">
+  				<span class="valores" id="blueRedValue">-1</span>
+
+  				</label>
+  				<br>
+  				<label>
+    			&#x1F535; &#10145; &#x1F7E1;:
+    			<input type="range" min="-1" max="1" step="0.01" id="blueYellow" value="0.75" oninput="document.getElementById('blueYellowValue').textContent = this.value">
+  				<span class="valores" id="blueYellowValue">0.75</span>
+
+  				</label>
+
+  			</form>
+  		</div>
+
+  	</div>
+  	<div class="legenda-box">
+  			<ul>
+  				<li><p class="legenda"><b>Valores NEGATIVOS  &#10145; ATRAÇÃO</b></p> </li>
+  				<li><p class="legenda"><b>Valores POSITIVOS &#10145; REPULSÃO</b></p></li>
+  			</ul>
+  			
+  			
+  		</div>
+
+</div>
+<footer>
+- Made by Daniel de Melo Arantes Cabral - 2023
+</footer>
+</body>
+
+
+</html>
