@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Simulação de Partículas - Gravidade</title>
+	<link rel="stylesheet" type="text/css" href="css/reset.css">
+	<link rel="stylesheet" type="text/css" href="css/styles3.css">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Ysabeau+SC:wght@200&display=swap" rel="stylesheet">
+</head>
+<body>
+
+
+<canvas id="life" width="1000" height="1000"></canvas>
+<script>
+  const m = document.getElementById("life").getContext("2d");
+const draw = (x, y, c, s) => {
+  m.fillStyle = c;
+  m.beginPath();
+  m.arc(x, y, s / 2, 0, 2 * Math.PI);
+  m.fill();
+
+  
+};
+
+  const particles = [];
+  const particle = (x, y, c) => {
+    return { x: x, y: y, vx: 0, vy: 0, color: c };
+  };
+  const random = () => {
+    return Math.random() * 400 + 50;
+  };
+  const create = (number, color) => {
+    const group = [];
+    for (let i = 0; i < number; i++) {
+      group.push(particle(random(), random(), color));
+      particles.push(group[i]);
+    }
+    return group;
+  };
+
+const rule = (particles1, particles2, g) => {
+  const resistance = 0.001; // Coeficiente de resistência do ar
+
+  for (let i = 0; i < particles1.length; i++) {
+    let fx = 0;
+    let fy = 0;
+    for (let j = 0; j < particles2.length; j++) {
+      if (i !== j) {
+        const a = particles1[i];
+        const b = particles2[j];
+        const dx = b.x - a.x;
+        const dy = b.y - a.y;
+        const d = Math.sqrt(dx * dx + dy * dy);
+
+        if (d > 0 && d < 30) {
+          const F = (g * 1) / d;
+          const ax = F * dx;
+          const ay = F * dy;
+
+          // F = m * a -> a = F / m
+          const mass = 1; // Massa das partículas
+          const accelerationX = ax / mass;
+          const accelerationY = ay / mass;
+
+          a.vx += accelerationX;
+          a.vy += accelerationY;
+
+          // Adicionar força de resistência
+          const resistanceX = -resistance * a.vx;
+          const resistanceY = -resistance * a.vy;
+
+          a.vx += resistanceX;
+          a.vy += resistanceY;
+        }
+      }
+    }
+  }
+};
+
+
+
+
+
+  const red = create(250, "red");
+  const yellow = create(50, "yellow");
+  const green = create(50, "green");
+
+  const update = () => {
+    rule(red, red, -0.01);
+    rule(yellow, yellow, -0.01);
+    rule(yellow, red, 0.1);
+    rule(red, yellow, 0.01)
+    rule(green, red, 0.01);
+    rule(green, yellow, -0.01);
+    rule(yellow, green, 0.01);
+    rule(red, green, -0.01)
+    rule(green, green, 0.01)
+    
+
+    for (let i = 0; i < particles.length; i++) {
+  const p = particles[i];
+  p.x += p.vx;
+  p.y += p.vy;
+
+  if (p.x <= 0 || p.x >= 1000) {
+    p.vx *= -1;
+  }
+  if (p.y <= 0 || p.y >= 1000) {
+    p.vy *= -1;
+  }
+
+  draw(p.x, p.y, p.color, 5);
+}
+
+
+    m.clearRect(0, 0, 1000, 1000);
+    draw(0, 0, "black", 10000);
+    for (let i = 0; i < particles.length; i++) {
+      const p = particles[i];
+      p.x += p.vx;
+      p.y += p.vy;
+      draw(p.x, p.y, p.color, 5);
+    }
+    window.requestAnimationFrame(update);
+  };
+
+  update();
+</script>
+
+
+
+
+	
+</body>
+</html>

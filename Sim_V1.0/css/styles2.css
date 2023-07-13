@@ -39,10 +39,11 @@ p {
   padding: 10px;
   margin: 10px 0;
 }
+
 b {
-text-decoration: underline;
-font-weight: bold;
-margin: 150px;
+  text-decoration: underline;
+  font-weight: bold;
+  margin: 150px;
 }
 
 h1 {
@@ -419,6 +420,7 @@ marquee {
     padding-right: 0;
   }
 }
+
 footer {
   position: fixed;
   bottom: 5px;
@@ -432,3 +434,28 @@ footer {
   padding-top: 20px;
   font-family: 'Ysabeau SC', sans-serif;
 }
+.mapa {
+  display: block;
+  margin: 0 auto;
+  width: 600px;
+  height: 450px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+}
+.aluno {
+  display: block;
+  margin: 0 auto;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.nomedan {
+  text-align: center;
+  font-size: 15px;
+  margin-top: 20px;
+}
+
+

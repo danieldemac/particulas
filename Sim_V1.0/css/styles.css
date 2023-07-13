@@ -3,7 +3,7 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background-color: black;
+  background-color: #12385f;
   padding-bottom: 60px;
 }
 
@@ -27,9 +27,8 @@ body {
   margin: 0;
   color: white;
   text-align: center;
-  padding-left: 200px;
   font-family: 'Ysabeau SC', sans-serif;
-
+  background-color: #3726B5;
 }
 
 .title i {
@@ -44,18 +43,21 @@ p {
   line-height: 1.5;
   background-color: white;
   text-align: justify;
-  text-indent: 2em; /* adiciona um espaço de 2 vezes o tamanho da fonte no começo do texto */
-  padding: 2em 2em;
+  text-indent: 2em;
+  padding: 2em;
+  color: #333;
 }
 
 b {
   font-weight: bold;
 }
+
 .titulo {
-	color: white;
+  color: white;
 }
+
 label {
-	font-size: 5px;
+  font-size: 5px;
   font-family: 'Ysabeau SC', sans-serif;
 }
 
@@ -66,12 +68,12 @@ label {
   justify-content: space-between;
   margin-bottom: 30px;
   height: 500px;
-  
- 
 }
 
-
-.verde label, .vermelho label, .amarelo label, .azul label {
+.verde label,
+.vermelho label,
+.amarelo label,
+.azul label {
   font-size: 18px;
   margin-bottom: 10px;
   display: block;
@@ -80,7 +82,7 @@ label {
 .verde input[type="range"],
 .vermelho input[type="range"],
 .amarelo input[type="range"],
-.azul input [type="range"]{
+.azul input[type="range"] {
   display: block;
   width: 100%;
   height: 100%;
@@ -122,18 +124,15 @@ label {
   border: 30px solid rgba(0, 0, 0, 0.2);
   border-radius: 5px;
   margin-right: 20px;
-  height: 600;
-  width: 800;
-  position: auto;
-  ;
-  
+  height: 600px;
+  width: 800px;
 }
+
 .verde {
   background-color: #7aff7a;
   padding: 10px;
   border-radius: 5px;
   position: relative;
-
 }
 
 .vermelho {
@@ -151,6 +150,7 @@ label {
   width: 140px;
   padding-top: 20px;
 }
+
 .azul {
   background-color: lightblue;
   padding: 10px;
@@ -168,49 +168,47 @@ label {
   color: #fff;
   background-color: #333;
   border-radius: 0.5rem;
-  
-
 }
 
 button {
-	position: absolute;
+  position: absolute;
   padding-right: 100%;
   height: 40px;
-
 }
-.legenda-box{
+
+.legenda-box {
   position: inherit;
   padding-right: 40px;
-
-
-  
 }
 
 .legenda {
-	text-align: center;
-	background-color: black;
-	color: white;
-
-
+  text-align: center;
+  background-color: black;
+  color: white;
 }
+
 ul {
   list-style: none;
 }
+
 canvas {
   padding: 0;
   border: 0;
 }
+
 .box-controles {
   padding: 10px;
 }
-    header {
+
+header {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100px;
   background-color: #f1f1f1;
 }
-    nav ul {
+
+nav ul {
   list-style: none;
   margin: 0;
   padding: 0;
@@ -240,26 +238,11 @@ nav a:hover {
   color: #f1f1f1;
 }
 
-    .img2 {
-  height: 60px;
-  margin-left: 20px; 
-}
-marquee{
-  background-color: black;
-  color: white;
-  font-family: monospace;
-  padding: 10 10 10 10;
-  border-radius: 2px;
-
-}
 .img2 {
-  background-color: whitesmoke;
-  margin: 20px;
-  height: 120px;
-  width: 120px;
-
-
+  height: 60px;
+  margin-left: 20px;
 }
+
 .title h1 img {
   padding-bottom: 20px;
   display: inline-block;
@@ -273,9 +256,8 @@ footer {
   height: 20px;
   color: white;
   background-color: rgba(0, 0, 0, 0.5);
-  text-align: center; /* Centraliza o texto */
-  font-size: 1rem; /* Aumenta o tamanho da fonte para 1.5 rem */
+  text-align: center;
+  font-size: 1rem;
   padding-top: 20px;
   font-family: 'Ysabeau SC', sans-serif;
 }
-
