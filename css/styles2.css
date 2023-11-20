@@ -9,9 +9,11 @@ ul {
 
 /* Estilos do header e da navegação */
 header {
-  background-color: #f8f8f8; /* Cor de fundo do cabeçalho */
-  padding: 20px;
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+  background-color: #f1f1f1;
 }
 
 nav ul {
@@ -99,7 +101,7 @@ p {
 }
 
 .texto ul li {
-  font-size: 14px; /* Tamanho da fonte da lista */
+  font-size: 16px; /* Tamanho da fonte da lista */
   margin-bottom: 8px; /* Espaçamento inferior entre os itens da lista */
   line-height: 1.4; /* Altura da linha para melhor legibilidade */
 }
@@ -111,3 +113,27 @@ p {
   width: 1em; /* Tamanho do bullet */
   margin-left: -1em; /* Alinha o bullet corretamente */
 }
+.title {
+  font-weight: bold;
+  font-size: 20px;
+  text-decoration: underline;
+}
+h2 {
+  font-weight: bold;
+  font-size: 20px;
+ }
+ .center {
+  text-align: center;
+  background-color: #333;
+  color: #fff;
+}
+
+.center .bold-text {
+  font-weight: bold;
+  font-size: 16px;
+}
+.image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+ }
