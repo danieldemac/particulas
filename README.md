@@ -2,7 +2,7 @@
 <p align="center">Repositório para hospedar o projeto "Partículas Emergentes".</p>
 <img align="center" src="images/readmeimg.png" alt="Partículas">
 
-Este repositório abriga um projeto de simulação de partículas destinado a demonstrar o fenômeno emergente. O principal objetivo é criar uma simulação interativa que ilustre como comportamentos complexos e emergentes podem surgir a partir da interação simples entre partículas individuais.
+ Este repositório abriga um projeto de simulação de partículas destinado a demonstrar o fenômeno emergente. O principal objetivo é criar uma simulação interativa que ilustre como comportamentos complexos e emergentes podem surgir a partir da interação simples entre partículas individuais.
 
 O projeto utiliza linguagens de programação como HTML, CSS e JavaScript. Essas ferramentas foram escolhidas para criar uma experiência imersiva e interativa, permitindo que os usuários explorem visualmente o fenômeno emergente.
 
