@@ -4,7 +4,7 @@
 
 Este repositório abriga um projeto de simulação de partículas desenvolvido para demonstrar o fenômeno emergente. O objetivo principal do projeto é criar uma simulação interativa que ilustre como comportamentos complexos e emergentes podem surgir a partir da interação simples entre as partículas individuais.
 
-O projeto utiliza linguagens de programação como HTML, CSS e JavaScript, juntamente com a biblioteca Unity 3D e a linguagem de programação C#. Essas ferramentas foram escolhidas para criar uma experiência imersiva e interativa, permitindo aos usuários explorar o fenômeno emergente de forma visualmente atraente.
+O projeto utiliza linguagens de programação como HTML, CSS e JavaScript. Essas ferramentas foram escolhidas para criar uma experiência imersiva e interativa, permitindo aos usuários explorar o fenômeno emergente de forma visualmente atraente.
 
 ## Disponivel no Netlify!
 
