@@ -16,6 +16,9 @@
 &emsp;O repositório contém todo o código-fonte necessário para executar a simulação, incluindo arquivos de recursos. Além disso, são fornecidos exemplos e instruções detalhadas para facilitar o entendimento e a utilização do projeto.
 
 ## Recursos Principais do Repositório:
+<p align="center">
+  <img width="300" height="300" src="images/particles02.jfif" alt="Partículas">
+</p>
 
 1. Código-fonte: Todos os arquivos de código necessários para executar a simulação, incluindo scripts em JavaScript para controlar o comportamento das partículas e a interação entre elas.
 2. Documentação e instruções: Exemplos e instruções detalhadas sobre como configurar e executar a simulação, bem como informações adicionais sobre os conceitos e princípios por trás do fenômeno emergente.
@@ -27,7 +30,9 @@
 Se você tiver algum feedback, por favor, envie um e-mail para dm.arantes.cabral@gmail.com.
 
 ## Referências
-
+<p align="center">
+  <img width="300" height="300" src="images/particles01.jfif" alt="Partículas">
+</p>
  - [Particle Life Simulation - by Hunar Ahmad](https://github.com/hunar4321/particle-life)
 
 ## Autor
