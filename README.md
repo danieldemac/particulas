@@ -11,14 +11,14 @@ O projeto utiliza linguagens de programação como HTML, CSS e JavaScript, junta
 1. Abra o seu navegador da web no seu PC.
 2. Entre pelo link: https://particulasemergentes.netlify.app/
 
-O repositório contém todo o código-fonte necessário para executar a simulação, bem como arquivos de recursos, como modelos 3D e texturas. Além disso, são fornecidos exemplos e instruções detalhadas para facilitar o entendimento e a utilização do projeto.
+O repositório contém todo o código-fonte necessário para executar a simulação, bem como arquivos de recursos. Além disso, são fornecidos exemplos e instruções detalhadas para facilitar o entendimento e a utilização do projeto.
 
-##Os principais recursos do repositório incluem:
+## Os principais recursos do repositório incluem:
 
 1. Código-fonte: Todos os arquivos de código necessários para executar a simulação, incluindo scripts em JavaScript controlar o comportamento das partículas e a interação entre elas.
 2. Documentação e instruções: Exemplos e instruções detalhadas sobre como configurar e executar a simulação, bem como informações adicionais sobre os conceitos e princípios por trás do fenômeno emergente.
 
-Este repositório visa fornecer uma base sólida para estudantes, desenvolvedores e entusiastas interessados em explorar o fenômeno emergente por meio de simulações interativas. Através da compreensão e manipulação das configurações das partículas, é possível observar e experimentar diferentes comportamentos emergentes, aprofundando o conhecimento nessa área fascinante da ciência. sSeja para fins educacionais, de pesquisa ou simplesmente para diversão, este repositório oferece a oportunidade de explorar e compreender o fenômeno emergente de maneira prática e envolvente.
+Este repositório visa fornecer uma base sólida para estudantes, desenvolvedores e entusiastas interessados em explorar o fenômeno emergente por meio de simulações interativas. Através da compreensão e manipulação das configurações das partículas, é possível observar e experimentar diferentes comportamentos emergentes, aprofundando o conhecimento nessa área fascinante da ciência. Seja para fins educacionais, de pesquisa ou simplesmente para diversão, este repositório oferece a oportunidade de explorar e compreender o fenômeno emergente de maneira prática e envolvente.
 
 ## Feedback
 
