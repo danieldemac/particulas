@@ -2,7 +2,7 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background-color: #1f4782; /* Tom mais claro para o fundo */
+  background-color: #000000; /* Tom mais claro para o fundo */
   padding-bottom: 60px;
   color: #333; /* Cor de texto padrão */
 }
@@ -27,7 +27,7 @@ body {
   color: #fff; /* Cor do texto do título */
   text-align: center;
   font-family: 'Ysabeau SC', sans-serif;
-  background-color: #5c4bff; /* Cor de fundo do título */
+  background-color: #120f34; /* Cor de fundo do título */
   padding: 10px 20px; /* Espaçamento interno do título */
   border-radius: 8px; /* Borda arredondada */
 }
@@ -59,7 +59,7 @@ b {
 
 label {
   font-size: 12px; /* Tamanho da fonte dos rótulos */
-  font-family: 'Ysabeau SC', sans-serif;
+  
 }
 
 /* Estilo dos controles */
@@ -94,7 +94,7 @@ label {
   margin: 0 auto 30px;
   font-size: 18px;
   padding: 10px 20px;
-  background-color: #d32f2f; /* Cor de fundo do botão */
+  background-color: rgb(156, 46, 46); /* Cor de fundo do botão */
   color: #fff;
   border: 2px solid #b71c1c; /* Cor da borda do botão */
   border-radius: 10px;
@@ -104,13 +104,14 @@ label {
 }
 
 .btn_box:hover {
-  background-color: #fff;
-  color: #120a8f; /* Mudança de cor ao passar o mouse */
+  background-color: #e99191;
+  color: #ff0000; /* Mudança de cor ao passar o mouse */
+  border: 2px solid #ffffff; /* Cor da borda do botão */
 }
 
 /* Estilo da simulação */
 .life_box {
-  background-color: #f8f8f8;
+  background-color: #000000;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   padding: 20px;
@@ -135,10 +136,10 @@ label {
   position: relative;
 }
 
-.verde { background-color: #7aff7a; }
-.vermelho { background-color: #ff7a7a; }
-.amarelo { background-color: #fff878; width: 140px; padding-top: 16px; }
-.azul { background-color: #add8e6; width: 133px; }
+.verde { background-color: #84d784; }
+.vermelho { background-color: #942626; }
+.amarelo { background-color: #c6bf42; width: 140px; padding-top: 16px; }
+.azul { background-color: #357288; width: 133px; }
 
 .valores {
   display: inline-block;
@@ -164,7 +165,7 @@ button {
 
 .legenda {
   text-align: center;
-  background-color: black;
+  background-color: #120f34;
   color: white;
 }
 
@@ -231,5 +232,5 @@ footer {
   text-align: center;
   font-size: 1rem;
   padding-top: 20px;
-  font-family: 'Ysabeau SC', sans-serif;
+  
 }
