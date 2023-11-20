@@ -1,6 +1,6 @@
 <h1 align="center">Projeto "Partículas Emergentes" &#x1F7E2; &#x1F534; &#x1F7E1; &#x1F535;</h1>
 <p align="center">Repositório para hospedar o projeto "Partículas Emergentes".</p>
-<img align="center" src="images/readmeimg.png" alt="Partículas">
+<img width="300" height="180" align="center" src="images/readmeimg.png" alt="Partículas">
 
 &emsp;Este repositório abriga um projeto de simulação de partículas destinado a demonstrar o fenômeno emergente. O principal objetivo é criar uma simulação interativa que ilustre como comportamentos complexos e emergentes podem surgir a partir da interação simples entre partículas individuais.
 
