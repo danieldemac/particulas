@@ -137,3 +137,105 @@ h2 {
   justify-content: center;
   align-items: center;
  }
+
+ .bio {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.bio h3 {
+  color: #4fc3f7;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  text-align: center;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.bio p {
+  color: #000000;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-size: 1.1rem;
+}
+
+.highlights {
+  background: rgba(33, 150, 243, 0.1);
+  padding: 1.5rem;
+  border-radius: 10px;
+  margin: 2rem 0;
+  border-left: 4px solid #2196f3;
+}
+
+.highlights h4 {
+  color: ##4fc3f7;
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+}
+
+.highlights ul {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.highlights li {
+  color: #000000;
+  padding: 0.8rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 6px;
+  transition: transform 0.3s ease;
+  font-size: 0.95rem;
+}
+
+.highlights li:hover {
+  transform: translateY(-3px);
+  background: rgba(33, 150, 243, 0.15);
+}
+
+.experience {
+  margin-top: 2rem;
+}
+
+.experience h4 {
+  color: ##4fc3f7;
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+}
+
+.experience p {
+  text-align: left;
+  margin-bottom: 0.8rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+}
+
+.experience strong {
+  color: ##4fc3f7;
+  font-weight: 500;
+}
+
+/* Efeitos responsivos */
+@media (max-width: 768px) {
+  .bio {
+    padding: 1.5rem;
+  }
+  
+  .highlights ul {
+    grid-template-columns: 1fr;
+  }
+  
+  .bio h3 {
+    font-size: 1.8rem;
+  }
+}
+
