@@ -14,119 +14,137 @@
 
 <canvas id="life" width="1000" height="1000"></canvas>
 <script>
-  const m = document.getElementById("life").getContext("2d");
-const draw = (x, y, c, s) => {
-  m.fillStyle = c;
-  m.beginPath();
-  m.arc(x, y, s / 2, 0, 2 * Math.PI);
-  m.fill();
+  const canvas = document.getElementById("life");
+    const m = canvas.getContext("2d");
+    const particles = [];
+    const particleRadius = 5;
+    const resistance = 0.01;
+    const restitution = 0.01; // Coeficiente de restituição (0 = inelástico, 1 = elástico)
 
-  
-};
+    const draw = (x, y, c, s) => {
+      m.fillStyle = c;
+      m.beginPath();
+      m.arc(x, y, s / 2, 0, 2 * Math.PI);
+      m.fill();
+    };
 
-  const particles = [];
-  const particle = (x, y, c) => {
-    return { x: x, y: y, vx: 0, vy: 0, color: c };
-  };
-  const random = () => {
-    return Math.random() * 400 + 50;
-  };
-  const create = (number, color) => {
-    const group = [];
-    for (let i = 0; i < number; i++) {
-      group.push(particle(random(), random(), color));
-      particles.push(group[i]);
-    }
-    return group;
-  };
+    const particle = (x, y, c) => {
+      return { x, y, vx: (Math.random() - 0.5) * 2, vy: (Math.random() - 0.5) * 2, color: c };
+    };
 
-const rule = (particles1, particles2, g) => {
-  const resistance = 0.001; // Coeficiente de resistência do ar
+    const random = () => Math.random() * (canvas.width - 100) + 50;
 
-  for (let i = 0; i < particles1.length; i++) {
-    let fx = 0;
-    let fy = 0;
-    for (let j = 0; j < particles2.length; j++) {
-      if (i !== j) {
-        const a = particles1[i];
-        const b = particles2[j];
-        const dx = b.x - a.x;
-        const dy = b.y - a.y;
-        const d = Math.sqrt(dx * dx + dy * dy);
+    const create = (number, color) => {
+      const group = [];
+      for (let i = 0; i < number; i++) {
+        let p = particle(random(), random(), color);
+        group.push(p);
+        particles.push(p);
+      }
+      return group;
+    };
 
-        if (d > 0 && d < 30) {
-          const F = (g * 1) / d;
-          const ax = F * dx;
-          const ay = F * dy;
+    const rule = (particles1, particles2, g) => {
+      for (let i = 0; i < particles1.length; i++) {
+        let fx = 0, fy = 0;
+        for (let j = 0; j < particles2.length; j++) {
+          if (i !== j) {
+            const a = particles1[i];
+            const b = particles2[j];
+            const dx = b.x - a.x;
+            const dy = b.y - a.y;
+            const d = Math.sqrt(dx * dx + dy * dy);
 
-          // F = m * a -> a = F / m
-          const mass = 1; // Massa das partículas
-          const accelerationX = ax / mass;
-          const accelerationY = ay / mass;
-
-          a.vx += accelerationX;
-          a.vy += accelerationY;
-
-          // Adicionar força de resistência
-          const resistanceX = -resistance * a.vx;
-          const resistanceY = -resistance * a.vy;
-
-          a.vx += resistanceX;
-          a.vy += resistanceY;
+            if (d > 0 && d < 50) {
+              const F = (g * 1) / d;
+              a.vx += (F * dx);
+              a.vy += (F * dy);
+            }
+            handleCollision(a, b); // Verifica e ajusta colisão
+          }
         }
       }
-    }
-  }
-};
+    };
+
+    const handleCollision = (a, b) => {
+      const dx = b.x - a.x;
+      const dy = b.y - a.y;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+      const minDistance = particleRadius * 2;
+
+      if (distance < minDistance) {
+        const nx = dx / distance;
+        const ny = dy / distance;
+        const dvx = b.vx - a.vx;
+        const dvy = b.vy - a.vy;
+        const dotProduct = dvx * nx + dvy * ny;
+        if (dotProduct > 0) return;
+
+        const impulse = (2 * dotProduct) / 2;
+        a.vx -= impulse * nx * restitution;
+        a.vy -= impulse * ny * restitution;
+        b.vx += impulse * nx * restitution;
+        b.vy += impulse * ny * restitution;
+
+        const overlap = minDistance - distance;
+        a.x -= nx * overlap / 1.01;
+        a.y -= ny * overlap / 1.01;
+        b.x += nx * overlap / 1.01;
+        b.y += ny * overlap / 1.01;
+      }
+    };
+
+    const red = create(50, "red");
+    const yellow = create(50, "yellow");
+    const green = create(50, "green");
+    const blue = create(50, "blue");
+
+    const update = () => {
+      rule(red, red, -0.01);
+      rule(yellow, yellow, 0.01);
+      rule(green, green, 0.01);
+      rule(blue, blue, -0.1);
+
+      rule(yellow, red, 0.1);
+      rule(red, yellow, 0);
+      
+      rule(green, red, 0.5);
+      rule(red, green, 0);
+      
+      rule(green, yellow, -0.01);
+      rule(yellow, green, 0.02);
+
+      rule(blue, red, 0.01);
+      rule(red, blue, 0);
+      
+      rule(blue, yellow, -0.01);
+      rule(yellow, blue, 0.01);
+      
+      rule(blue, green, -0.01);
+      rule(green, blue, 0.01);
+
+      m.fillStyle = "black";
+      m.fillRect(0, 0, canvas.width, canvas.height);
+
+      for (let i = 0; i < particles.length; i++) {
+        let p = particles[i];
+        p.x += p.vx;
+        p.y += p.vy;
+
+        p.vx *= (1 - resistance);
+        p.vy *= (1 - resistance);
+
+        if (p.x <= particleRadius || p.x >= canvas.width - particleRadius) p.vx *= -1;
+        if (p.y <= particleRadius || p.y >= canvas.height - particleRadius) p.vy *= -1;
+
+        draw(p.x, p.y, p.color, particleRadius);
+      }
+      window.requestAnimationFrame(update);
+    };
+
+    update();
 
 
-
-
-
-  const red = create(250, "red");
-  const yellow = create(50, "yellow");
-  const green = create(50, "green");
-
-  const update = () => {
-    rule(red, red, -0.01);
-    rule(yellow, yellow, -0.01);
-    rule(yellow, red, 0.1);
-    rule(red, yellow, 0.01)
-    rule(green, red, 0.01);
-    rule(green, yellow, -0.01);
-    rule(yellow, green, 0.01);
-    rule(red, green, -0.01)
-    rule(green, green, 0.01)
-    
-
-    for (let i = 0; i < particles.length; i++) {
-  const p = particles[i];
-  p.x += p.vx;
-  p.y += p.vy;
-
-  if (p.x <= 0 || p.x >= 1000) {
-    p.vx *= -1;
-  }
-  if (p.y <= 0 || p.y >= 1000) {
-    p.vy *= -1;
-  }
-
-  draw(p.x, p.y, p.color, 5);
-}
-
-
-    m.clearRect(0, 0, 1000, 1000);
-    draw(0, 0, "black", 10000);
-    for (let i = 0; i < particles.length; i++) {
-      const p = particles[i];
-      p.x += p.vx;
-      p.y += p.vy;
-      draw(p.x, p.y, p.color, 5);
-    }
-    window.requestAnimationFrame(update);
-  };
-
-  update();
 </script>
 
 
