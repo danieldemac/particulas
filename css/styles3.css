@@ -1,5 +1,31 @@
-	body {
-			background-image: url("images/ceu.jpg");
-			background-repeat: no-repeat;
-			background-size: cover;
-		}
+body {
+	background: black url("bg.jpg") no-repeat center center fixed;
+	background-size: cover; /* Faz a imagem cobrir toda a tela */
+    margin: 0;
+    display: flex;
+    flex-direction: column; /* Organiza os elementos na vertical */
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+
+
+h1 {
+    font-family: 'Ysabeau SC', sans-serif;
+    font-size: 3rem; /* Tamanho grande para o título */
+    color: white; /* Cor do texto */
+    margin-bottom: 20px; /* Espaço abaixo do título */
+}
+
+a {
+	font-family: 'Ysabeau SC', sans-serif;
+    color: white; /* Cor do texto */
+    margin-bottom: 20px; /* Espaço abaixo do título */
+}
+
+canvas {
+    display: block;
+    border: 5px solid #222;
+    border-radius: 10px;
+}

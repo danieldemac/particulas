@@ -10,21 +10,35 @@
 	<link href="https://fonts.googleapis.com/css2?family=Ysabeau+SC:wght@200&display=swap" rel="stylesheet">
 </head>
 <body>
+  <div>
+    <h1>Teste Órbitas:</h1>
+  </div>
+  <div>
+    <canvas id="life" width="1000" height="700"></canvas>  
+  </div>
+  <div>
+    <a href="index.html"> Voltar <--- </a>
+  </div>
 
 
-<canvas id="life" width="1000" height="1000"></canvas>
-<script>
-  const canvas = document.getElementById("life");
+
+  
+<script>  
+    const canvas = document.getElementById("life");
     const m = canvas.getContext("2d");
     const particles = [];
     const particleRadius = 5;
     const resistance = 0.01;
     const restitution = 0.01; // Coeficiente de restituição (0 = inelástico, 1 = elástico)
+    const trailOpacity = 0.2; // Controle o rastro (0.1 a 0.5)
+    const glowSize = 8;       // Tamanho do efeito glow
+    
 
+    // --- MODIFIQUE A FUNÇÃO DRAW ---
     const draw = (x, y, c, s) => {
       m.fillStyle = c;
       m.beginPath();
-      m.arc(x, y, s / 2, 0, 2 * Math.PI);
+      m.arc(x, y, s, 0, 2 * Math.PI); // Tamanho original
       m.fill();
     };
 
@@ -39,7 +53,7 @@
       for (let i = 0; i < number; i++) {
         let p = particle(random(), random(), color);
         group.push(p);
-        particles.push(p);
+        particles.push(p); // ← Garanta que está adicionando às partículas
       }
       return group;
     };
@@ -94,58 +108,121 @@
       }
     };
 
-    const red = create(50, "red");
-    const yellow = create(50, "yellow");
-    const green = create(50, "green");
-    const blue = create(50, "blue");
+    const red = create(25, "crimson");
+    const yellow = create(25, "darkorange");
+    const green = create(25, "seagreen");
+    const blue = create(25, "skyblue");
+    const purple = create(25, "orchid");
 
-    const update = () => {
-      rule(red, red, -0.01);
+    canvas.addEventListener('click', (e) => {
+    const rect = canvas.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    // Lista de grupos e cores existentes
+    const grupos = [
+        { grupo: red, cor: "crimson" },
+        { grupo: yellow, cor: "darkorange" },
+        { grupo: green, cor: "seagreen" },
+        { grupo: blue, cor: "skyblue" },
+        { grupo: purple, cor: "orchid" }
+    ];
+
+    // Seleciona um grupo aleatório
+    const grupoAleatorio = grupos[Math.floor(Math.random() * grupos.length)];
+
+    // Cria nova bolinha no grupo selecionado
+    const novaBolinha = particle(x, y, grupoAleatorio.cor);
+    grupoAleatorio.grupo.push(novaBolinha); // Adiciona ao grupo correto
+    particles.push(novaBolinha);
+
+    // Atualize as regras para incluir o novo membro (opcional)
+    rule(red, red, -0.01);
       rule(yellow, yellow, 0.01);
       rule(green, green, 0.01);
-      rule(blue, blue, -0.1);
+      rule(blue, blue, 0.01);
+      rule(purple, purple, 0.02);
 
-      rule(yellow, red, 0.1);
-      rule(red, yellow, 0);
-      
-      rule(green, red, 0.5);
-      rule(red, green, 0);
-      
+      rule(yellow, red, 0.03);
+      rule(red, yellow, -0.01);
+      rule(purple, red, -0.01);
+      rule(red, purple, 0.03);
+      rule(purple, yellow, -0.1);
+      rule(yellow, purple, 0.3);
+      rule(purple, green, -0.2);
+      rule(green, purple, 0.1);
+      rule(purple, blue, -0.08);
+      rule(blue, purple, 0.08);
+      rule(green, red, 0.2);
+      rule(red, green, 0.001);
       rule(green, yellow, -0.01);
       rule(yellow, green, 0.02);
-
-      rule(blue, red, 0.01);
-      rule(red, blue, 0);
-      
+      rule(blue, red, 0.1);
+      rule(red, blue, 0.001);
       rule(blue, yellow, -0.01);
       rule(yellow, blue, 0.01);
-      
+      rule(blue, green, -0.01);
+      rule(green, blue, 0.01);
+    });
+
+    const update = () => {
+  // 1. Efeito de rastro (novo)
+  m.fillStyle = `rgba(0, 0, 0, 0.2)`; // Valor entre 0.1 e 0.3
+  m.fillRect(0, 0, canvas.width, canvas.height);
+
+  // 2. Regras de interação entre partículas (original - ESSENCIAL)
+  rule(red, red, -0.01);
+      rule(yellow, yellow, 0.01);
+      rule(green, green, 0.01);
+      rule(blue, blue, 0.01);
+      rule(purple, purple, 0.02);
+
+      rule(yellow, red, 0.03);
+      rule(red, yellow, -0.01);
+      rule(purple, red, -0.01);
+      rule(red, purple, 0.03);
+      rule(purple, yellow, -0.1);
+      rule(yellow, purple, 0.3);
+      rule(purple, green, -0.2);
+      rule(green, purple, 0.1);
+      rule(purple, blue, -0.08);
+      rule(blue, purple, 0.08);
+      rule(green, red, 0.2);
+      rule(red, green, 0.001);
+      rule(green, yellow, -0.01);
+      rule(yellow, green, 0.02);
+      rule(blue, red, 0.1);
+      rule(red, blue, 0.001);
+      rule(blue, yellow, -0.01);
+      rule(yellow, blue, 0.01);
       rule(blue, green, -0.01);
       rule(green, blue, 0.01);
 
-      m.fillStyle = "black";
-      m.fillRect(0, 0, canvas.width, canvas.height);
+  // 3. Atualização de posições e desenho (original)
+  for (let i = 0; i < particles.length; i++) {
+    let p = particles[i];
+    p.x += p.vx;
+    p.y += p.vy;
 
-      for (let i = 0; i < particles.length; i++) {
-        let p = particles[i];
-        p.x += p.vx;
-        p.y += p.vy;
+    p.vx *= (1 - resistance);
+    p.vy *= (1 - resistance);
 
-        p.vx *= (1 - resistance);
-        p.vy *= (1 - resistance);
+    if (p.x <= particleRadius || p.x >= canvas.width - particleRadius) p.vx *= -1;
+    if (p.y <= particleRadius || p.y >= canvas.height - particleRadius) p.vy *= -1;
 
-        if (p.x <= particleRadius || p.x >= canvas.width - particleRadius) p.vx *= -1;
-        if (p.y <= particleRadius || p.y >= canvas.height - particleRadius) p.vy *= -1;
-
-        draw(p.x, p.y, p.color, particleRadius);
-      }
-      window.requestAnimationFrame(update);
-    };
+    draw(p.x, p.y, p.color, particleRadius);
+  }
+  
+  window.requestAnimationFrame(update);
+};
 
     update();
 
 
+
+
 </script>
+
 
 
 
